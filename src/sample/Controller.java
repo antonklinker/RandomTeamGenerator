@@ -52,7 +52,7 @@ public class Controller {
         }
     }
 
-    public void realGenerate() throws Exception {
+    public void realGenerate() {
         try {
             int amountOfTeams = Integer.parseInt(teamsamount.getText());
             if (everyone.size()%amountOfTeams==0) {
@@ -165,6 +165,6 @@ public class Controller {
     }
 
     public void resetprogram(ActionEvent actionEvent) {
-        System.out.println("HAHA");
+        System.out.println("NOT WORKING");
     }
 }
