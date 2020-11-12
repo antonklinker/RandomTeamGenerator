@@ -97,6 +97,7 @@ public class Controller {
 
 
     public void addTextFields(ActionEvent actionEvent) {
+
         for (int i=0; i<(int)playersamount.getValue(); i++) {
             amountOfPlayers[i] = new TextField();
             amountOfPlayers[i].setLayoutX(40);
@@ -165,6 +166,13 @@ public class Controller {
     }
 
     public void resetprogram(ActionEvent actionEvent) {
+        try {
+        for (int i=0; i<amountOfPlayers.length; i++) {
+            mybackground.getChildren().remove(amountOfPlayers[i]);
+        }
         System.out.println("NOT WORKING");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(e);
+        }
     }
 }
