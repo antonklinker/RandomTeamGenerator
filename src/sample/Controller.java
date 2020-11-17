@@ -28,13 +28,17 @@ public class Controller {
     public AnchorPane team2background;
     public AnchorPane potbackground;
     public Button resetbutton;
+    public Button addToEveryone;
 
 
-    AnchorPane[] teamBackgrounds = new AnchorPane[4];
-    Label[] playerDisplays = new Label[8];
-    TextField[] amountOfPlayers = new TextField[8];
+    //AnchorPane[] teamBackgrounds = new AnchorPane[4];
+    AnchorPane[] teamBackgrounds;
+    //Label[] playerDisplays = new Label[8];
+    Label[] playerDisplays;
+    TextField[] amountOfPlayers;
     ArrayList<String> everyone = new ArrayList<>();
-    List[] teams = new List[100];
+    //List[] teams = new List[100];
+    List[] teams;
     int amountOfPeople;
 
     public void initialize() {
@@ -55,6 +59,9 @@ public class Controller {
     public void realGenerate() {
         try {
             int amountOfTeams = Integer.parseInt(teamsamount.getText());
+            teamBackgrounds = new AnchorPane[amountOfTeams];
+            playerDisplays = new Label[amountOfPeople];
+            teams = new List[amountOfTeams];
             if (everyone.size()%amountOfTeams==0) {
                 for (int i = 0; i < amountOfTeams; i++) {
                     teamBackgrounds[i] = new AnchorPane();
@@ -98,6 +105,7 @@ public class Controller {
 
     public void addTextFields(ActionEvent actionEvent) {
 
+        amountOfPlayers = new TextField[(int)playersamount.getValue()];
         for (int i=0; i<(int)playersamount.getValue(); i++) {
             amountOfPlayers[i] = new TextField();
             amountOfPlayers[i].setLayoutX(40);
@@ -108,7 +116,7 @@ public class Controller {
         try {
 
 
-            Button addToEveryone = new Button();
+            addToEveryone = new Button();
             addToEveryone.setLayoutX(40);
             addToEveryone.setLayoutY(160 + (30 * amountOfPlayers.length));
             addToEveryone.setPrefWidth(150);
@@ -125,17 +133,17 @@ public class Controller {
     public void addPeople(ActionEvent actionEvent) {
         try {
             potbackground.getChildren().clear();
-            //Label[] potpeople = new Label[8];
             for (int i = 0; i < amountOfPlayers.length; i++) {
                 try {
-                    everyone.add(amountOfPlayers[i].getText());
-                    //System.out.println(amountOfPlayers[i].getText());
-                    if (amountOfPlayers[i].getText().equals("")) {
-                        System.out.println(i + " was empty and has been removed");
-                        everyone.remove(i);
-                    }
-                } catch (NullPointerException e) {
 
+                    //System.out.println(amountOfPlayers[i].getText());
+                    if (!amountOfPlayers[i].getText().equals("")) {
+                        //System.out.println(i + " was empty and has been removed");
+                        //everyone.remove(i);
+                        everyone.add(amountOfPlayers[i].getText());
+                    }
+                } catch (NullPointerException | IndexOutOfBoundsException e) {
+                    e.printStackTrace();
                 }
             }
             amountOfPeople = everyone.size();
@@ -167,9 +175,11 @@ public class Controller {
 
     public void resetprogram(ActionEvent actionEvent) {
         try {
+            addToEveryone.setVisible(false);
         for (int i=0; i<amountOfPlayers.length; i++) {
             mybackground.getChildren().remove(amountOfPlayers[i]);
         }
+
         System.out.println("NOT WORKING");
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e);
