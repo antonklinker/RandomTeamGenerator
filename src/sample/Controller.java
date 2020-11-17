@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -16,6 +18,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
     public TextField teamsamount;
@@ -29,6 +32,9 @@ public class Controller {
     public AnchorPane potbackground;
     public Button resetbutton;
     public Button addToEveryone;
+    public Slider teamsamountSlider;
+    public Label numberofteams;
+    public AnchorPane teamsbackground;
 
 
     //AnchorPane[] teamBackgrounds = new AnchorPane[4];
@@ -58,18 +64,18 @@ public class Controller {
 
     public void realGenerate() {
         try {
-            int amountOfTeams = Integer.parseInt(teamsamount.getText());
+            int amountOfTeams = (int)teamsamountSlider.getValue();
             teamBackgrounds = new AnchorPane[amountOfTeams];
             playerDisplays = new Label[amountOfPeople];
             teams = new List[amountOfTeams];
             if (everyone.size()%amountOfTeams==0) {
                 for (int i = 0; i < amountOfTeams; i++) {
                     teamBackgrounds[i] = new AnchorPane();
-                    teamBackgrounds[i].setLayoutX(230 + (100 * i));
-                    teamBackgrounds[i].setLayoutY(290);
+                    teamBackgrounds[i].setLayoutX(0 + (100 * i));
+                    teamBackgrounds[i].setLayoutY(0);
                     teamBackgrounds[i].setPrefSize(92, 246);
-                    teamBackgrounds[i].setStyle("-fx-border-color:#9361; -fx-background-color: #666;");
-                    mybackground.getChildren().add(teamBackgrounds[i]);
+                    teamBackgrounds[i].setStyle("-fx-border-color:BLUE; -fx-background-color: #090364");
+                    teamsbackground.getChildren().add(teamBackgrounds[i]);
                     teams[i] = new ArrayList<String>();
                 }
 
@@ -79,6 +85,7 @@ public class Controller {
                     header.setText("Team " + (i + 1));
                     header.setLayoutY(15);
                     header.setLayoutX(15);
+                    header.setTextFill(Color.BLUE);
                     teamBackgrounds[i].getChildren().add(header);
                     for (int j = 0; j < amountOfPeople / amountOfTeams; j++) {
                         int randNumber = (int) (Math.random() * everyone.size());
@@ -88,6 +95,7 @@ public class Controller {
                         playerDisplays[j] = new Label();
                         playerDisplays[j].setLayoutX(17);
                         playerDisplays[j].setLayoutY(30 + (20 * j));
+                        playerDisplays[j].setTextFill(Color.BLUE);
                         playerDisplays[j].setText((String) teams[i].get(j));
                         teamBackgrounds[i].getChildren().add(playerDisplays[j]);
                     }
@@ -99,35 +107,6 @@ public class Controller {
         } catch (NumberFormatException e){
             System.out.println("You need to input a number");
         }
-    }
-
-
-
-    public void addTextFields(ActionEvent actionEvent) {
-
-        amountOfPlayers = new TextField[(int)playersamount.getValue()];
-        for (int i=0; i<(int)playersamount.getValue(); i++) {
-            amountOfPlayers[i] = new TextField();
-            amountOfPlayers[i].setLayoutX(40);
-            amountOfPlayers[i].setLayoutY(160 + (30*i));
-            mybackground.getChildren().add(amountOfPlayers[i]);
-        }
-
-        try {
-
-
-            addToEveryone = new Button();
-            addToEveryone.setLayoutX(40);
-            addToEveryone.setLayoutY(160 + (30 * amountOfPlayers.length));
-            addToEveryone.setPrefWidth(150);
-            addToEveryone.setText("Add the people");
-            addToEveryone.setOnAction(this::addPeople);
-            mybackground.getChildren().add(addToEveryone);
-        }
-        catch (Exception e ){
-            System.out.println("Something went wrong");
-        }
-
     }
 
     public void addPeople(ActionEvent actionEvent) {
@@ -148,12 +127,6 @@ public class Controller {
             }
             amountOfPeople = everyone.size();
             for (int i = 0; i < everyone.size(); i++) {
-                /*potpeople[i] = new Label();
-                potpeople[i].setLayoutX(56);
-                potpeople[i].setLayoutY(30 + (15*i));
-                potpeople[i].setText(everyone.get(i));
-                potbackground.getChildren().add(potpeople[i]);
-                System.out.println(everyone.get(i));*/
                 Label potman = new Label();
                 potman.setLayoutX(56);
                 potman.setLayoutY(30 + (15*i));
@@ -184,5 +157,43 @@ public class Controller {
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e);
         }
+    }
+
+    public void add_TextFields(MouseEvent mouseEvent) throws InterruptedException {
+        System.out.println("WORKING");
+        mybackground.getChildren().clear();
+
+
+        amountOfPlayers = new TextField[(int)playersamount.getValue()];
+
+
+        for (int i=0; i<(int)playersamount.getValue(); i++) {
+            amountOfPlayers[i] = new TextField();
+            amountOfPlayers[i].setStyle("-fx-border-color: BLUE; -fx-control-inner-background: #090364");
+            amountOfPlayers[i].setLayoutX(14);
+            amountOfPlayers[i].setLayoutY(20 + (30*i));
+            mybackground.getChildren().add(amountOfPlayers[i]);
+        }
+
+        try {
+
+
+            addToEveryone = new Button();
+            addToEveryone.setStyle("-fx-border-color: BLUE; -fx-background-color: #020139");
+            addToEveryone.setTextFill(Color.BLUE);
+            addToEveryone.setLayoutX(14);
+            addToEveryone.setLayoutY(20 + (30 * amountOfPlayers.length));
+            addToEveryone.setPrefWidth(150);
+            addToEveryone.setText("Add the people");
+            addToEveryone.setOnAction(this::addPeople);
+            mybackground.getChildren().add(addToEveryone);
+        }
+        catch (Exception e ){
+            System.out.println("Something went wrong");
+        }
+    }
+
+    public void setTeamsAmount(MouseEvent mouseEvent) {
+        numberofteams.setText(String.valueOf((int)teamsamountSlider.getValue()));
     }
 }
