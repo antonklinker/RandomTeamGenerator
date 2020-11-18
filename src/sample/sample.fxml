@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1600.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -11,27 +12,23 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="800.0" prefWidth="1600.0" style="-fx-background-color: BLACK;">
+      <AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: BLACK;">
          <children>
-            <AnchorPane fx:id="potbackground" layoutX="549.0" layoutY="27.0" prefHeight="239.0" prefWidth="200.0" />
-            <Button fx:id="resetbutton" layoutX="843.0" layoutY="108.0" mnemonicParsing="false" onAction="#resetprogram" text="RESET" />
-            <AnchorPane layoutX="14.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0">
+            <Canvas fx:id="background" height="800.0" width="817.0" />
+            <AnchorPane layoutX="14.0" layoutY="-14.0" prefHeight="200.0" prefWidth="204.0">
                <children>
-                  <Label layoutX="24.0" layoutY="33.0" text="Number of players to add" textFill="BLUE" />
-                  <Slider fx:id="playersamount" layoutX="22.0" layoutY="61.0" max="20.0" min="2.0" onMouseDragged="#setAmountText" onMouseReleased="#add_TextFields" style="-fx-control-inner-background: #090364cb;" />
-                  <AnchorPane fx:id="mybackground" layoutX="4.0" layoutY="104.0" prefHeight="468.0" prefWidth="200.0" />
-                  <Label fx:id="playersamounttext" layoutX="83.0" layoutY="87.0" text="2" textFill="BLUE" />
+                  <AnchorPane fx:id="mybackground" layoutX="8.0" layoutY="157.0" prefHeight="468.0" prefWidth="200.0" />
+                  <Label layoutX="10.0" layoutY="35.0" text="Players" textFill="BLUE" />
+                  <Slider fx:id="playersamount" layoutX="22.0" layoutY="61.0" max="20.0" min="2.0" onMouseDragged="#setAmountText" onMouseReleased="#add_TextFields" orientation="VERTICAL" prefHeight="113.0" prefWidth="14.0" style="-fx-control-inner-background: #090364cb;" />
+                  <Label fx:id="playersamounttext" layoutX="45.0" layoutY="109.0" text="2" textFill="BLUE" />
+                  <Label layoutX="148.0" layoutY="35.0" text="Teams" textFill="BLUE" />
+                  <Slider fx:id="teamsamountSlider" layoutX="159.0" layoutY="61.0" max="10.0" min="2.0" onMouseDragged="#setTeamsAmount" orientation="VERTICAL" prefHeight="113.0" prefWidth="14.0" style="-fx-control-inner-background: #090364cb;" />
+                  <Label fx:id="numberofteams" layoutX="141.0" layoutY="109.0" text="2" textFill="BLUE" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="246.0" layoutY="27.0" prefHeight="169.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="teamsbutton" layoutX="88.0" layoutY="116.0" mnemonicParsing="false" onAction="#generateTeams" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: grey;" textFill="#020139" />
-                  <Label layoutX="54.0" layoutY="31.0" text="Number of teams" textFill="BLUE" />
-                  <Slider fx:id="teamsamountSlider" layoutX="30.0" layoutY="58.0" max="10.0" min="2.0" onMouseDragged="#setTeamsAmount" />
-                  <Label fx:id="numberofteams" layoutX="92.0" layoutY="78.0" text="2" textFill="BLUE" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="teamsbackground" layoutX="246.0" layoutY="300.0" prefHeight="477.0" prefWidth="857.0" />
+            <AnchorPane fx:id="teamsbackground" layoutX="246.0" layoutY="162.0" prefHeight="477.0" prefWidth="571.0" />
+            <Button fx:id="exitButton" layoutX="765.0" layoutY="2.0" mnemonicParsing="false" onAction="#closeApp" style="-fx-background-color: TRANSPARENT; -fx-border-color: BLUE;" text="EXIT" textFill="BLUE" />
+            <AnchorPane fx:id="dragBar" layoutX="4.0" onMouseDragged="#moveApp" onMousePressed="#recordMousePosition" prefHeight="27.0" prefWidth="757.0" />
          </children>
       </AnchorPane>
    </children>
